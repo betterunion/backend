@@ -57,6 +57,7 @@ top level can be viewed by the user, but not edited directly
             * political leaning/orientation
             * political party
             * profession
+            * values (a map of string values)
         * personal description (where they can write a paragraph or something describing themselves)
         * photo (as a url)
     * protected information (like by the political classification algorithm... this can neither be viewed nor edited by the user)
