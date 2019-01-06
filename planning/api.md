@@ -106,7 +106,7 @@ interface UserInformation {
   photo?: Private<string>;
 }
 
-function getUserInformation(uid: string): UserInformation {}
+async function getUserInformation(uid: string): Promise<UserInformation> {}
 ```
     
 ##### editing user personal information
@@ -120,7 +120,7 @@ frontend:
 * edits the user information. Takes an object with with the information to be updated
 * @param information
 */
-function editUserInformation(information: Map<string, any>) {}
+async function editUserInformation(information: Map<string, any>): Promise<void> {}
 ```
 
 ##### accessing user protected information
@@ -137,7 +137,8 @@ frontend:
 /**
 * Returns the default privacy options for a user
 */
-function getUserDefaultPrivacy(): Map<string, number> { return null }
+//todo: this probably should have a real return type after the default privacy fields are decided
+async function getUserDefaultPrivacy(): Promise<any> {}
 ```
 
 ##### editing the user's default privacy information
@@ -149,7 +150,7 @@ frontend:
 * 
 * @param privacy 
 */
-function editUserDefaultPrivacy(privacy: Map<string, number>) {}
+async function editUserDefaultPrivacy(privacy: any): Promise<void> {}
 ```   
 ## questions
 
@@ -214,7 +215,7 @@ frontend:
 /**
 * Calls the backend getQuestions function
 */
-function getQuestions(): Question[] {}
+async function getQuestions(): Promise<Question[]> {}
 ```
 
 ##### accessing a question
@@ -225,7 +226,7 @@ function getQuestions(): Question[] {}
 
 frontend:
 ```typescript
-function getQuestion(req, res): Question {}
+async function getQuestion(req, res): Promise<Question> {}
 ```
 
 ##### posting a question
@@ -257,7 +258,7 @@ frontend:
 * @param tags
 * @returns the id of the question
 */
-function postQuestion(content: {title: string, body?: string}, tags?: string[]): string {}
+async function postQuestion(content: {title: string, body?: string}, tags?: string[]): Promise<string> {}
 ```
 
 ##### accessing the personalized conversations of that question
@@ -284,7 +285,7 @@ frontend:
 * 
 * @param questionId
 */
-function getConversations(questionId: string): Conversation[] {};
+async function getConversations(questionId: string): Promise<Conversation[]> {};
 ```
     
 ##### accessing a conversation
