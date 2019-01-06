@@ -14,6 +14,27 @@
 
 * this is done through firebase, but a backend function will need to setup the user's profile.
 
+backend:
+```typescript
+/**
+* first, a backend datastore for the user must be created
+* 
+* Setup the metadata for the user based on the info,
+* then setup the personal, protected, and privacy documents under the information subcollection
+* 
+* Additionally, some sort of welcome email could be sent here
+* 
+* (we shouldn't need to verify user's accounts by email, since they will at least initially
+* be signing in with providers such as google or facebook which have already provided this
+* info)
+* 
+* @param user
+*/
+const handleNewUserFunction = (user): void => {};
+
+export const handleNewUser = functions.auth.user().onCreate(handleNewUserFunction);
+```
+
 ##### accessing user personal information
 
 backend:
@@ -24,6 +45,22 @@ backend:
     be needed that takes into account different security settings. This function should return
     as much information about the user as is allowed, and it can be used both for user profile
     pages and for saying the name of the user replying to a comment
+    
+backend:
+
+```typescript
+/**
+* Gets the user information for a specific user, where information is only returned if
+* the privacy settings allow for it. Additionally, the privacy values on the settings should
+* all be set to 0 in order to make the privacy settings always private.
+* 
+* @param userId
+* @param context
+*/
+const getUserInformationFunction = ({userId: string}, context: any): UserInformation => {};
+
+export const getUserInformation = functions.https.onCall(getUserInformationFunction);
+```
     
 frontend:
 
@@ -54,19 +91,19 @@ interface Location {
 interface UserInformation {
   name: Name; //same as age
   identity: {
-      race: Private<string[]>;
-      gender: Private<string>;
-      sexualOrientation: Private<string>;
-      age: Age; //not private because it's individual members are
-      location: Location; //same ^
-      religion: Private<string>;
-      politicalOrientation: Private<string>;
-      politicalParty: Private<string>;
-      profession: Private<string>;
-      values: Private<string[]>;
+      race?: Private<string[]>;
+      gender?: Private<string>;
+      sexualOrientation?: Private<string>;
+      age?: Age; //not private because it's individual members are
+      location?: Location; //same ^
+      religion?: Private<string>;
+      politicalOrientation?: Private<string>;
+      politicalParty?: Private<string>;
+      profession?: Private<string>;
+      values?: Private<string[]>;
   }
-  description: Private<string>;
-  photo: Private<string>;
+  description?: Private<string>;
+  photo?: Private<string>;
 }
 
 function getUserInformation(uid: string): UserInformation {}
@@ -74,9 +111,10 @@ function getUserInformation(uid: string): UserInformation {}
     
 ##### editing user personal information
 
-* users can only access their own personal information. This can be done directly through th
+* users can only access their own personal information. This can be done directly through the
     database.
-    
+  
+frontend:  
 ```typescript
 /**
 * edits the user information. Takes an object with with the information to be updated
@@ -162,10 +200,13 @@ interface Question {
 
 /**
 * Uses the user ID to return a list of questions to the user.
-* @param req
-* @param res
+* @param data unused
+* @param context unused
 */
-function getQuestions(req, res): Question[] {}
+const getQuestionsFunction = (data, context) => Question[] {};
+
+export const getQuestions = functions.https.onCall(getQuestionsFunction);
+
 ```
 
 frontend:
@@ -178,8 +219,9 @@ function getQuestions(): Question[] {}
 
 ##### accessing a question
 
-* information about a question can be gotten directly from the database
-backend:
+* information about a question can be gotten directly from the database. This will not include
+    the associated conversations, however, since the conversations are personalized, the
+    conversations will need to be gotten separately.
 
 frontend:
 ```typescript
@@ -201,7 +243,9 @@ backend:
 * @param req
 * @param res
 */
-function postQuestion(req, res): string {}
+const postQuestionFunction = (data, context): string => {};
+
+export const postQuestion = functions.https.onCall(postQuestionFunction);
 ```
     
 frontend: 
@@ -225,6 +269,23 @@ function postQuestion(content: {title: string, body?: string}, tags?: string[]):
     most different than the user. It returns these n conversations, and records that these are
     the conversations that were presented to the user so that they will be the ones that are
     presented again later.
+  
+backend:
+```typescript
+
+const getConversationsFunction = ({questionId}, context): Conversation[] => {};
+
+export const getConversations = functions.https.onCall(getConversationsFunction);
+```
+    
+frontend:
+```typescript
+/**
+* 
+* @param questionId
+*/
+function getConversations(questionId: string): Conversation[] {};
+```
     
 ##### accessing a conversation
 
@@ -234,11 +295,47 @@ function postQuestion(content: {title: string, body?: string}, tags?: string[]):
 
 * this should be done by directly querying the database using an onSnapshot, so that the replies
     are pushed directly to the client
+    
+frontend:
+```typescript
+function onNewReplies(questionId: string,
+    conversationId: string,
+    callback: (replies: Reply[]) => void
+): () => void {};
+```
 
 ##### starting a conversation
 
 * the client need only supply the id of the question and the content of the reply. The server
     should then be able to generate the required data fields for the conversation and the reply
+backend:
+
+backend:
+```typescript
+/**
+* 
+* @param questionId
+* @param body
+* @param context
+* 
+* @returns the id of the conversation
+*/
+const postConversationFunction = (
+    {questionId, content: {body}}: {questionId: string, content: {body: string}},
+    context
+): string => {};
+
+export const postConversation = functions.https.onCall(postConversationFunction);
+```
+    
+frontend:
+
+```typescript
+async function postConversation(
+    questionId: string,
+    content: {body: string}
+): Promise<string> {};
+```
 
 ##### posting a reply to a conversation
 
@@ -247,3 +344,56 @@ function postQuestion(content: {title: string, body?: string}, tags?: string[]):
     There should be a function that adjusts the privacy settings of the conversation whenever the
     members change.
 
+backend:
+```typescript
+/**
+* 
+* @param questionId
+* @param conversationId
+* @param content the content of the reply
+* @param context
+*/
+const postReplyFunction = (
+    {questionId, conversationId, content}:
+    {questionId: string, conversationId: string, content: {body: string}},
+    context: any
+): string => {};
+
+export const postReply = functions.https.onCall(postReplyFunction);
+```
+
+frontend:
+```typescript
+async function postReply(
+    questionId: string,
+    conversationId: string,
+    content: {body: string}
+): Promise<string> {};
+```
+
+
+
+##### editing a reply
+
+* Like posting, the client must supply the id of the question and of the conversation, as well
+    as the new content of the reply. Then, the server will adjust the time.lastEdit data field.
+
+backend:
+
+```typescript
+const editReplyFunction = (
+    {questionId, conversationId, content}:
+    {questionId: string, conversationId: string, content: {body: string}},
+    context: any
+): void => {};
+```
+
+frontend:
+
+```typescript
+async function editReply(
+    questionId: string,
+    conversationId: string,
+    content: {body: string}
+): Promise<void> {};
+```
