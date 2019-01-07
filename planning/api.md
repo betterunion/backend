@@ -133,7 +133,13 @@ async function editUserPersonalInformation(information: Map<string, any>): Promi
     the user would access their personal information
     
 frontend:
+
+
 ```typescript
+interface UserDefaultPrivacyInformation {
+    questions: number;
+    conversations: number;
+}
 /**
 * Returns the default privacy options for a user
 */
