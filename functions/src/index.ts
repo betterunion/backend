@@ -5,3 +5,6 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
+import {handleNewUserFunction} from "./handleNewUser";
+
+export const handleNewUser = functions.auth.user().onCreate(handleNewUserFunction);

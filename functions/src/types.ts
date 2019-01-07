@@ -52,7 +52,7 @@ export interface UserPersonalInformation {
 }
 
 export interface UserProtectedInformation {
-    viewedQuestions: Map<string, string[]> //id of the question to the array of the conversations seen
+    viewedQuestions?: Map<string, string[]> //id of the question to the array of the conversations seen
     otherData?: any;
 }
 

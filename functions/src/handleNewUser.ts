@@ -1,6 +1,7 @@
 import {UserPersonalInformation, UserMetadata, UserProtectedInformation, UserDefaultPrivacyInformation} from "./types";
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import {mapToFirestoreMap} from "./util/maps";
 
 /**
  * first, a backend datastore for the user must be created
@@ -16,14 +17,14 @@ import * as admin from "firebase-admin";
  *
  * @param user
  */
-const handleNewUserFunction = async (user: functions.auth.UserRecord): Promise<any[]> => {
+export const handleNewUserFunction = async (user: functions.auth.UserRecord): Promise<any[]> => {
     //the fields of user can be found here https://firebase.google.com/docs/reference/functions/functions.auth.UserRecord
 
     //record their id
-    let uid = user.uid;
+    const uid = user.uid;
 
     //create the object that will be the top level metadata for the user
-    let userMetadata: UserMetadata = {
+    const userMetadata: UserMetadata = {
         email: user.email,
         emailVerified: user.emailVerified,
         role: 'user',
@@ -33,7 +34,7 @@ const handleNewUserFunction = async (user: functions.auth.UserRecord): Promise<a
     };
 
     //create the personal information object, autofilling whatever fields that we can
-    let userPersonalInformation: UserPersonalInformation = {
+    const userPersonalInformation: UserPersonalInformation = {
         name: {
             first: {value: user.displayName, privacy: 3}
         },
@@ -45,26 +46,30 @@ const handleNewUserFunction = async (user: functions.auth.UserRecord): Promise<a
 
     //create the protected information object
 
-    let userProtectedInformation: UserProtectedInformation = {
-        viewedQuestions: new Map<string, string[]>()
+    const testMap = new Map<string, string[]>();
+
+    testMap.set("test", ["hi", "man"]);
+
+    const userProtectedInformation = {
+        viewedQuestions: mapToFirestoreMap(testMap)
     };
 
     //create the default privacy information object
 
-    let userDefaultPrivacyInformation: UserDefaultPrivacyInformation = {
+    const userDefaultPrivacyInformation: UserDefaultPrivacyInformation = {
         questions: 3,
         conversations: 3
     };
 
     //write all of the data
 
-    let db = admin.firestore();
-    let ref = db.collection("users").doc(uid);
+    const db = admin.firestore();
+    const ref = db.collection("users").doc(uid);
 
-    let dbPromise = ref.set(userMetadata).then(() => {
+    const dbPromise = ref.set(userMetadata).then(() => {
         return Promise.all([
-            ref.collection("information").doc("personal").set(userPersonalInformation),
             ref.collection("information").doc("protected").set(userProtectedInformation),
+            ref.collection("information").doc("personal").set(userPersonalInformation),
             ref.collection("information").doc("privacy").set(userDefaultPrivacyInformation)
         ]);
     });
@@ -76,5 +81,3 @@ const handleNewUserFunction = async (user: functions.auth.UserRecord): Promise<a
 
     return Promise.all([dbPromise]);
 };
-
-export const handleNewUser = functions.auth.user().onCreate(handleNewUserFunction);
