@@ -2,6 +2,7 @@ import {UserPersonalInformation, UserMetadata, UserProtectedInformation, UserDef
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import {mapToFirestoreMap} from "./util/maps";
+import {displayNameToName} from "./util/names";
 
 /**
  * first, a backend datastore for the user must be created
@@ -35,9 +36,7 @@ export const handleNewUserFunction = async (user: functions.auth.UserRecord): Pr
 
     //create the personal information object, autofilling whatever fields that we can
     const userPersonalInformation: UserPersonalInformation = {
-        name: {
-            first: {value: user.displayName, privacy: 3}
-        },
+        name: displayNameToName(user.displayName),
         identity: {
 
         },
