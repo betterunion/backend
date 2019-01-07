@@ -5,6 +5,20 @@ import {displayNameToName} from "../../src/util/names";
 
 describe("util/names", () => {
     describe("displayNameToName", () => {
+
+        it("handles null", () => {
+            const displayName = null;
+            const name = {
+                first: null,
+                middle: null,
+                last: null,
+                prefix: null,
+                suffix: null
+            };
+
+            expect(displayNameToName(displayName)).to.deep.equal(name);
+        });
+
         it("handles Aidan", () => {
             const displayName = "Aidan";
             const name = {

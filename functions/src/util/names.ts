@@ -1,7 +1,7 @@
 import {Name} from "../types";
 
 export function displayNameToName(displayName: string): Name {
-    let split = displayName.split(" ");
+
 
     let output: Name = {
         first: null,
@@ -10,6 +10,12 @@ export function displayNameToName(displayName: string): Name {
         prefix: null,
         suffix: null
     };
+
+    if(displayName === null) {
+        return output;
+    }
+
+    let split = displayName.split(" ");
 
     //if there is a prefix, add it
     if(split[0].indexOf(".") >= 0) {
