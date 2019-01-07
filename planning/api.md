@@ -57,9 +57,9 @@ backend:
 * @param userId
 * @param context
 */
-const getUserInformationFunction = ({userId: string}, context: any): UserInformation => {};
+const getUserPersonalInformationFunction = ({userId: string}, context: any): UserPersonalInformation => {};
 
-export const getUserInformation = functions.https.onCall(getUserInformationFunction);
+export const getUserPersonalInformation = functions.https.onCall(getUserPersonalInformationFunction);
 ```
     
 frontend:
@@ -88,7 +88,7 @@ interface Location {
     //todo
 }
 
-interface UserInformation {
+interface UserPersonalInformation {
   name: Name; //same as age
   identity: {
       race?: Private<string[]>;
@@ -106,7 +106,7 @@ interface UserInformation {
   photo?: Private<string>;
 }
 
-async function getUserInformation(uid: string): Promise<UserInformation> {}
+async function getUserPersonalInformation(uid: string): Promise<UserPersonalInformation> {}
 ```
     
 ##### editing user personal information
@@ -120,7 +120,7 @@ frontend:
 * edits the user information. Takes an object with with the information to be updated
 * @param information
 */
-async function editUserInformation(information: Map<string, any>): Promise<void> {}
+async function editUserPersonalInformation(information: Map<string, any>): Promise<void> {}
 ```
 
 ##### accessing user protected information

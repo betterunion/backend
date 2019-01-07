@@ -29,6 +29,7 @@ represented as milliseconds since 1970, in the UTC timezone.
 # users
 top level can be viewed by the user, but not edited directly
 * email
+* `emailVerified`: a boolean if the email has been verified
 * role (user, moderator, admin, ...)
 * time
     * created
