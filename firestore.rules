@@ -25,7 +25,7 @@ service cloud.firestore {
         //questions
 
         match /questions/{questionId} {
-            allow read;
+            allow read: if true;
         }
 
         match /questions/{questionId}/conversations/{conversationId}/replies/{replyId} {
