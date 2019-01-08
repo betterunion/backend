@@ -18,7 +18,5 @@ export async function getUserPersonalInformationFunction(
         maxLevel = 1;
     }
 
-    privacyHelper(output, maxLevel);
-
-    return <UserPersonalInformation> output;
+    return <UserPersonalInformation> privacyHelper(output, maxLevel);
 }

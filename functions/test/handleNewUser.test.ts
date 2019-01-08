@@ -7,7 +7,7 @@ export function testHandleNewUser(test) {
     const wrapped = test.wrap(myFunctions.handleNewUser);
 
     before(function() {
-        const basicUser: functions.auth.UserRecord = {
+        const basicUser = test.auth.makeUserRecord({
             uid: "basicUser",
             email: "basicUser@fake.email",
             emailVerified: false,
@@ -15,21 +15,8 @@ export function testHandleNewUser(test) {
             phoneNumber: null,
             photoURL: null,
             disabled: false,
-            metadata: {
-                lastSignInTime: "0",
-                creationTime: "0",
-                toJSON: () => {
-                    return ""
-                }
-            },
-            providerData: [],
-            toJSON: () => {
-                return ""
-            }
-        };
+        });
         return wrapped(basicUser);
-
-
     });
 
     after(function() {
