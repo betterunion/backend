@@ -1,10 +1,10 @@
-// The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
-const functions = require('firebase-functions');
-
-// The Firebase Admin SDK to access the Firebase Realtime Database.
-const admin = require('firebase-admin');
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 admin.initializeApp();
 
 import {handleNewUserFunction} from "./handleNewUser";
-
 export const handleNewUser = functions.auth.user().onCreate(handleNewUserFunction);
+
+import {getUserPersonalInformationFunction} from "./getUserPersonalInformation";
+export const getUserPersonalInformation = functions.https.onCall(getUserPersonalInformationFunction);
+

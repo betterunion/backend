@@ -1,4 +1,4 @@
-import {UserPersonalInformation, UserMetadata, UserProtectedInformation, UserDefaultPrivacyInformation} from "./types";
+import {UserPersonalInformation, UserMetadata, UserProtectedInformation, UserDefaultPrivacyInformation} from "../../../types/types";
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import {mapToFirestoreMap} from "./util/maps";

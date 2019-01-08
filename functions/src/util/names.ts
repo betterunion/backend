@@ -1,4 +1,4 @@
-import {Name} from "../types";
+import {Name} from "../../../../types/types";
 
 export function displayNameToName(displayName: string): Name {
 
