@@ -3,7 +3,7 @@ import "mocha";
 
 import {mapToFirestoreMap, firestoreMapToMap} from "../../src/util/maps";
 
-describe("util/maps", () => {
+export function testMaps() {
     describe("mapToFirestoreMap", () => {
         let testMap = new Map<string, string[]>();
 
@@ -35,4 +35,4 @@ describe("util/maps", () => {
             expect(firestoreMapToMap({test: ["foo", "bar"]})).to.deep.equal(testMap);
         });
     });
-});
+}

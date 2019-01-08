@@ -3,7 +3,7 @@ import {expect} from "chai";
 
 import {displayNameToName} from "../../src/util/names";
 
-describe("util/names", () => {
+export function testNames() {
     describe("displayNameToName", () => {
 
         it("handles null", () => {
@@ -110,4 +110,4 @@ describe("util/names", () => {
             expect(displayNameToName(displayName)).to.deep.equal(name);
         });
     });
-});
+}

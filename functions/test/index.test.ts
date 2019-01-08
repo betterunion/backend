@@ -8,24 +8,22 @@ let onlineConfig = {
     projectId: "betterunion-8ac8f"
 };
 
-let pathToKey = "../keys/betterunion-8ac8f-c38aaf15539b.json";
+
+let pathToKey = "/Users/aidan/Documents/betterunion/backend/functions/keys/betterunion-8ac8f-c38aaf15539b.json";
+
+
 
 const test = firebaseFunctionsTest(onlineConfig, pathToKey);
 
 import * as myFunctions from "../src/index";
+import * as admin from "firebase-admin";
+import {testHandleNewUser} from "./handleNewUser.test";
 
-describe("handleNewUser",  () => {
-    const wrapped = test.wrap(myFunctions.handleNewUser);
+describe("Cloud Functions", () => {
 
-    it("handles basic user", () => {
-        const basicUser: functions.auth.UserRecord = {
-            uid: "basicUser",
-            email: "basicUser@fake.email",
-            emailVerified: false,
-            displayName: "Basic User"
-        }
+    after(() => {
+        test.cleanup();
     });
+
+    describe("handleNewUser", () => testHandleNewUser(test));
 });
-
-
-
