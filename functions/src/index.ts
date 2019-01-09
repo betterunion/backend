@@ -10,3 +10,6 @@ export const getUserPersonalInformation = functions.https.onCall(getUserPersonal
 
 import {postQuestionFunction} from "./postQuestion";
 export const postQuestion = functions.https.onCall(postQuestionFunction);
+
+import {postConversationFunction} from "./postConversation";
+export const postConversation = functions.https.onCall(postConversationFunction);
