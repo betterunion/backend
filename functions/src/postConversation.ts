@@ -6,7 +6,7 @@ export async function postConversationFunction(
     {questionId, content: {body}}: {questionId: string, content: {body: string}},
     context
 ): Promise<string> {
-    if(context.auth.uid !== null) {
+    if(context.auth && context.auth.uid !== null) {
 
         //get the default privacy settings of the user
         let privacyResult = await admin.firestore()
@@ -39,6 +39,7 @@ export async function postConversationFunction(
             .collection("conversations")
             .add(conversation);
 
+
         let reply: Reply = {
             content: {
                 body
@@ -46,14 +47,15 @@ export async function postConversationFunction(
             time: {
                 posted: Date.now(),
                 lastEdit: null
-            }
+            },
+            author: context.auth.uid
         };
 
-        let replyRef = await conversationRef
+        await conversationRef
             .collection("replies")
             .add(reply);
 
-        return replyRef.id;
+        return conversationRef.id;
     }
     else {
         return null;

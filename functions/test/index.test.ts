@@ -20,6 +20,7 @@ import * as admin from "firebase-admin";
 import {testHandleNewUser} from "./handleNewUser.test";
 import {testGetUserPersonalInformation} from "./getUserPersonalInformation.test";
 import {testPostQuestion} from "./postQuestion.test";
+import {testPostConversation} from "./postConversation.test";
 
 describe("Cloud Functions", () => {
 
@@ -34,6 +35,8 @@ describe("Cloud Functions", () => {
     describe("HTTPS Functions", function() {
         describe("getUserPersonalInformation", function() {testGetUserPersonalInformation(test)});
 
-        describe("postQuestion", function() {testPostQuestion()});
+        describe("postQuestion", function() {testPostQuestion(test)});
+
+        describe("postConversation", function() {testPostConversation(test)})
     });
 });

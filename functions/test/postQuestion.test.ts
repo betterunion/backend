@@ -3,7 +3,7 @@ import {postQuestion} from "../src";
 import * as myFunctions from "../src/index";
 import {expect} from "chai";
 
-export function testPostQuestion() {
+export function testPostQuestion(test) {
 
     let questionId = "noId";
 
