@@ -19,6 +19,7 @@ import * as myFunctions from "../src/index";
 import * as admin from "firebase-admin";
 import {testHandleNewUser} from "./handleNewUser.test";
 import {testGetUserPersonalInformation} from "./getUserPersonalInformation.test";
+import {testPostQuestion} from "./postQuestion.test";
 
 describe("Cloud Functions", () => {
 
@@ -27,10 +28,12 @@ describe("Cloud Functions", () => {
     });
 
     describe("Firestore Functions", function() {
-        describe("handleNewUser", function() {testHandleNewUser(test)});
+        // describe("handleNewUser", function() {testHandleNewUser(test)});
     });
 
     describe("HTTPS Functions", function() {
-        describe("getUserPersonalInformation", function() {testGetUserPersonalInformation(test)});
+        // describe("getUserPersonalInformation", function() {testGetUserPersonalInformation(test)});
+
+        describe("postQuestion", function() {testPostQuestion()});
     });
 });

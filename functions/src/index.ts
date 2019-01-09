@@ -8,3 +8,5 @@ export const handleNewUser = functions.auth.user().onCreate(handleNewUserFunctio
 import {getUserPersonalInformationFunction} from "./getUserPersonalInformation";
 export const getUserPersonalInformation = functions.https.onCall(getUserPersonalInformationFunction);
 
+import {postQuestionFunction} from "./postQuestion";
+export const postQuestion = functions.https.onCall(postQuestionFunction);
