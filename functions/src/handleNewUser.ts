@@ -56,8 +56,10 @@ export const handleNewUserFunction = async (user: functions.auth.UserRecord): Pr
     //create the default privacy information object
 
     const userDefaultPrivacyInformation: UserDefaultPrivacyInformation = {
-        questions: 3,
-        conversations: 3
+        conversations: {
+            view: 3,
+            edit: 3
+        }
     };
 
     //write all of the data
