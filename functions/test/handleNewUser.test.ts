@@ -51,7 +51,7 @@ export function testHandleNewUser(test) {
     it("has default privacy information", function() {
         return ref.collection("information").doc("privacy").get().then(doc => {
             let data = doc.data();
-            expect(data).to.deep.equal({questions: 3, conversations: 3});
+            expect(data).to.deep.equal({conversations: {view: 3, edit: 3}});
         });
     });
 }

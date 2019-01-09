@@ -31,6 +31,28 @@ export function testPostQuestion() {
         ]);
     });
 
+    it("should fail when there is no logged in user", function() {
+        return myFunctions.postQuestion.run(
+            {content: {title: "test"}, tags: ["testTag"]},
+            {}
+        ).then(id => {
+            expect(id).to.equal(null);
+        });
+    });
+
+    it("should reject a user who is not a moderator or admin", function() {
+        return admin.firestore().collection("users").doc("postQuestionTestNormalUser").set({role: "user"}).then(() => {
+            //call the function
+            return myFunctions.postQuestion.run(
+                {content: {title: "test"}, tags: ["testTag"]},
+                {auth: {uid: "postQuestionTestNormalUser"}}
+            ).then(id => {
+                expect(id).to.equal(null);
+                return admin.firestore().collection("users").doc("postQuestionTestNormalUser").delete();
+            });
+        });
+    });
+
     it("should have returned the id", function() {
         expect(questionId).to.not.equal("noId");
     });

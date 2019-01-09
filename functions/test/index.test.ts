@@ -28,11 +28,11 @@ describe("Cloud Functions", () => {
     });
 
     describe("Firestore Functions", function() {
-        // describe("handleNewUser", function() {testHandleNewUser(test)});
+        describe("handleNewUser", function() {testHandleNewUser(test)});
     });
 
     describe("HTTPS Functions", function() {
-        // describe("getUserPersonalInformation", function() {testGetUserPersonalInformation(test)});
+        describe("getUserPersonalInformation", function() {testGetUserPersonalInformation(test)});
 
         describe("postQuestion", function() {testPostQuestion()});
     });

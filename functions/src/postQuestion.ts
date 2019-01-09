@@ -6,7 +6,7 @@ export async function postQuestionFunction(
     {content, tags}: {content: {title: string, body?:string}, tags: string[]},
     context: CallableContext
 ): Promise<string> {
-    if(context.auth.uid !== null) {
+    if(context.auth && context.auth.uid !== null) {
         return admin.firestore().collection("users").doc(context.auth.uid).get().then(result => {
             let role = result.data().role;
 
