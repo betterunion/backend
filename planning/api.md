@@ -404,3 +404,5 @@ async function editReply(
     content: {body: string}
 ): Promise<void> {};
 ```
+
+##### editing the a user's personal privacy level for a conversation
