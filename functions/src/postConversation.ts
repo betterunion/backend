@@ -1,13 +1,14 @@
 import * as admin from "firebase-admin";
 import {Conversation, Reply, UserDefaultPrivacyInformation} from "../../../types/types";
 import {mapToFirestoreMap} from "./util/maps";
+import {getPrivacyFromMembers} from "./util/privacy";
 
 export async function postConversationFunction(
-    {questionId, content: {body}}: {questionId: string, content: {body: string}},
+    {questionId, content}: {questionId: string, content: {body: string}},
     context
 ): Promise<string> {
     if(context.auth && context.auth.uid !== null) {
-
+        let body = content.body;
         //get the default privacy settings of the user
         let privacyResult = await admin.firestore()
             .collection("users")
@@ -23,10 +24,7 @@ export async function postConversationFunction(
         let conversation: Conversation = {
             members: mapToFirestoreMap(members),
             numMembers: 1,
-            privacy: {
-                view: privacy.conversations.view,
-                edit: privacy.conversations.edit
-            },
+            privacy: getPrivacyFromMembers(members),
             time: {
                 posted: Date.now(),
                 lastReply: Date.now()

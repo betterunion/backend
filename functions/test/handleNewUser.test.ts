@@ -1,4 +1,4 @@
-import * as myFunctions from "../src";
+import * as myFunctions from "../index";
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import {expect} from "chai";

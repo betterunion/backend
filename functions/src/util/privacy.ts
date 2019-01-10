@@ -18,3 +18,32 @@ export function privacyHelper(object: any, maxLevel: number): any {
 
     return output;
 }
+
+export function getPrivacyFromMembers(members: Map<string, {view: number, edit: number}> | any): {view: number, edit: number} {
+
+    let max = {view: 0, edit: 0};
+
+    function handleMax(value: {view: number, edit: number}) {
+        if(value.view > max.view) {
+            max.view = value.view;
+        }
+        if(value.edit > max.edit) {
+            max.edit = value.edit;
+        }
+    }
+
+    if(members instanceof Map) {
+        for(let entry of members.entries()) {
+            let value = entry[1];
+            handleMax(value);
+        }
+    }
+    else {
+        for(let key of Object.keys(members)) {
+            let value = members[key];
+            handleMax(value);
+        }
+    }
+
+    return max;
+}

@@ -11,7 +11,7 @@
     "test-util": "mocha -r ts-node/register \"test/util.test.ts\"",
     "test-functions": "mocha -r ts-node/register \"test/index.test.ts\""
   },
-  "main": "lib/index.js",
+  "main": "lib/backend/functions/index.js",
   "dependencies": {
     "@types/chai": "^4.1.7",
     "chai": "^4.2.0",

@@ -15,7 +15,7 @@ let pathToKey = "/Users/aidan/Documents/betterunion/backend/functions/keys/bette
 
 const test = firebaseFunctionsTest(onlineConfig, pathToKey);
 
-import * as myFunctions from "../src/index";
+import * as myFunctions from "../index";
 import * as admin from "firebase-admin";
 import {testHandleNewUser} from "./handleNewUser.test";
 import {testGetUserPersonalInformation} from "./getUserPersonalInformation.test";

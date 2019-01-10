@@ -1,4 +1,4 @@
-import {postConversation, postQuestion} from "../src";
+import {postConversation, postQuestion} from "../index";
 import * as admin from "firebase-admin";
 import "mocha";
 import {expect} from "chai";

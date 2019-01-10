@@ -1,4 +1,4 @@
-import {privacyHelper} from "../../src/util/privacy";
+import {getPrivacyFromMembers, privacyHelper} from "../../src/util/privacy";
 import "mocha";
 import {expect} from "chai";
 
@@ -88,6 +88,40 @@ export function testPrivacy() {
                     value: "foo",
                     privacy: 0
                 }
+            });
+        });
+    });
+
+    describe("getPrivacyFromMembers", function() {
+        describe("using a regular map", function() {
+            it("handles an empty map", function() {
+               let map = new Map<string, {view: number, edit: number}>();
+
+               expect(getPrivacyFromMembers(map)).to.deep.equal({view: 0, edit: 0});
+            });
+
+            it("handles multiple users", function() {
+                let map = new Map<string, {view: number, edit: number}>();
+
+                map.set("A", {view: 0, edit: 1});
+                map.set("B", {view: 1, edit: 2});
+                map.set("C", {view: 3, edit: 1});
+
+                expect(getPrivacyFromMembers(map)).to.deep.equal({view: 3, edit: 2});
+            })
+        });
+
+        describe("using a firestore map", function() {
+            it("handles an empty object", function() {
+                expect(getPrivacyFromMembers({})).to.deep.equal({view: 0, edit: 0});
+            });
+            
+            it("handles multiple users", function() {
+                expect(getPrivacyFromMembers({
+                    A: {view: 0, edit: 1},
+                    B: {view: 1, edit: 2},
+                    C: {view: 3, edit: 1},
+                })).to.deep.equal({view: 3, edit: 2});
             });
         });
     });

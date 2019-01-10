@@ -1,5 +1,5 @@
 import {handleNewUserFunction} from "../src/handleNewUser";
-import * as myFunctions from "../src";
+import * as myFunctions from "../index";
 import * as admin from "firebase-admin";
 import {expect} from "chai";
 import "mocha";
@@ -48,6 +48,12 @@ export function testGetUserPersonalInformation(test) {
                 last: {value: "level 1", privacy: 0},
             });
             expect(data.photo).to.deep.equal({value: "level 1", privacy: 0});
+        });
+    });
+
+    it("forms JSON", function() {
+        return myFunctions.getUserPersonalInformation.run({uid: "testUser"}, {auth: {uid: "not null"}}).then(data => {
+            expect(JSON.stringify(data)).to.not.equal(null);
         });
     });
 }

@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
-import {postQuestion} from "../src";
-import * as myFunctions from "../src/index";
+import {postQuestion} from "../index";
+import * as myFunctions from "../index";
 import {expect} from "chai";
 
 export function testPostQuestion(test) {
