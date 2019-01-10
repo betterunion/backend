@@ -11,15 +11,15 @@ service cloud.firestore {
         }
 
         match /users/{userId}/information/personal {
-            allow update, read: if request.auth.id == userId;
+            allow update, read: if request.auth.uid == userId;
         }
 
         match /users/{userId}/information/privacy {
-            allow update, read: if request.auth.id == userId;
+            allow update, read: if request.auth.uid == userId;
         }
 
         match /users/conversations/{conversationId} {
-            allow read: if request.auth.id == userId;
+            allow read: if request.auth.uid == userId;
         }
 
         //questions
