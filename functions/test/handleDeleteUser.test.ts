@@ -10,6 +10,6 @@ export function testHandleDeleteUser(test) {
             disabled: false,
         });
 
-        
+
     });
 }

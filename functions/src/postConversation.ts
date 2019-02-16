@@ -1,7 +1,7 @@
 import * as admin from "firebase-admin";
 import {Conversation, Reply, UserDefaultPrivacyInformation} from "../../../types/types";
-import {mapToFirestoreMap} from "./util/maps";
-import {getPrivacyFromMembers} from "./util/privacy";
+import {mapToFirestoreMap} from "../../../util/src/maps";
+import {getPrivacyFromMembers} from "../../../util/src/privacy";
 
 export async function postConversationFunction(
     {questionId, content}: {questionId: string, content: {body: string}},

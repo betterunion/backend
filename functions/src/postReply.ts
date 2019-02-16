@@ -1,7 +1,7 @@
 import {CallableContext} from "firebase-functions/lib/providers/https";
 import * as admin from "firebase-admin";
 import {Conversation, Reply} from "../../../types/types";
-import {firestoreMapToMap} from "./util/maps";
+import {firestoreMapToMap} from "../../../util/src/maps";
 
 export async function postReplyFunction(
     {questionId, conversationId, content}:

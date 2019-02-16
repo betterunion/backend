@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 import "mocha";
 import {expect} from "chai";
 import {Conversation} from "../../../types/types";
-import {firestoreMapToMap} from "../src/util/maps";
+import {firestoreMapToMap} from "../../../util/src/maps";
 
 export function testPostConversation(test) {
 

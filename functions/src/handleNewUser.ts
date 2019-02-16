@@ -1,8 +1,8 @@
 import {UserPersonalInformation, UserMetadata, UserProtectedInformation, UserDefaultPrivacyInformation} from "../../../types/types";
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import {mapToFirestoreMap} from "./util/maps";
-import {displayNameToName} from "./util/names";
+import {mapToFirestoreMap} from "../../../util/src/maps";
+import {displayNameToName} from "../../../util/src/names";
 
 /**
  * first, a backend datastore for the user must be created

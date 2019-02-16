@@ -1,6 +1,6 @@
 import {UserPersonalInformation} from "../../../types/types";
 import * as admin from "firebase-admin";
-import {privacyHelper} from "./util/privacy";
+import {privacyHelper} from "../../../util/src/privacy";
 import * as functions from "firebase-functions";
 
 export async function getUserPersonalInformationFunction(
