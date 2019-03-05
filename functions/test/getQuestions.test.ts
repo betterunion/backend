@@ -39,7 +39,8 @@ export function testGetQuestions(test) {
     });
 
     it("Should be an array", function() {
-        // expect();
+        expect(value).to.have.property("length");
+        expect(value.length).to.be.greaterThan(0);
     });
 
     it("should have an author", function() {

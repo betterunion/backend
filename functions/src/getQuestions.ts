@@ -3,12 +3,14 @@ import {Question} from "../../../types/types";
 import {CallableContext} from "firebase-functions/lib/providers/https";
 
 
-//todo:: Make the start actually work
-export async function getQuestionsFunction({start=0}: {start?: number}, context: CallableContext): Promise<Question[]> {
+//todo:: Make the page actually work
+export async function getQuestionsFunction({page=0}: {page?: number}, context: CallableContext): Promise<Question[]> {
+    const pageCount = 10;
+
     return admin.firestore()
         .collection("questions")
         .orderBy("time.posted", "desc")
-        .limit(10)
+        .limit(pageCount)
         .get()
         .then(result => {
             let length = result.docs.length;
