@@ -21,6 +21,7 @@ import {testHandleNewUser} from "./handleNewUser.test";
 import {testGetUserPersonalInformation} from "./getUserPersonalInformation.test";
 import {testPostQuestion} from "./postQuestion.test";
 import {testPostConversation} from "./postConversation.test";
+import {testGetQuestions} from "./getQuestions.test";
 
 describe("Cloud Functions", () => {
 
@@ -29,14 +30,16 @@ describe("Cloud Functions", () => {
     });
 
     describe("Firestore Functions", function() {
-        describe("handleNewUser", function() {testHandleNewUser(test)});
+        // describe("handleNewUser", function() {testHandleNewUser(test)});
     });
 
     describe("HTTPS Functions", function() {
-        describe("getUserPersonalInformation", function() {testGetUserPersonalInformation(test)});
+        // describe("getUserPersonalInformation", function() {testGetUserPersonalInformation(test)});
 
-        describe("postQuestion", function() {testPostQuestion(test)});
+        // describe("postQuestion", function() {testPostQuestion(test)});
 
-        describe("postConversation", function() {testPostConversation(test)})
+        // describe("postConversation", function() {testPostConversation(test)});
+
+        describe("getQuestions", function() {testGetQuestions(test)});
     });
 });
